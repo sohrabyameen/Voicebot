@@ -15,7 +15,7 @@ from config import recognizer, stop_flag, status, response_placeholder, speech_t
 llm = ChatGoogleGenerativeAI(
 model="gemini-2.0-flash",
 temperature=0.7,
-google_api_key="AIzaSyAd3MEQbRke_GMxoR9AnHefKzIxUKJ4Kbk" 
+google_api_key="" 
 )
 
 if "memory" not in st.session_state:
