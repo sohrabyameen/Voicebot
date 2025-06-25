@@ -8,7 +8,7 @@ st.set_page_config(page_title="🎙️ Voice AI Bot")
 
 from utils import stop_speaking, main
 
-
+# Running the Streamlit app with a title and instructions
 st.title("🎙️ Voice-Interactive AI Assistant")
 st.markdown("""
 - **Click "Start Speaking"** to begin a conversation with the AI.
@@ -16,7 +16,7 @@ st.markdown("""
 """)
 
 
-
+# Listener for the stop button
 if st.button("🎤 Start Speaking"):
     stop_flag = False 
 
