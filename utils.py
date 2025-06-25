@@ -6,18 +6,23 @@ import streamlit as st
 import pyttsx3
 import threading
 import speech_recognition as sr
+from dotenv import load_dotenv
+import os
 
 from config import recognizer, stop_flag, status, response_placeholder, speech_thread
 
 
+load_dotenv()
+api_key = os.getenv("API_KEY")
 
-
+# Setting up the Google Generative AI model
 llm = ChatGoogleGenerativeAI(
 model="gemini-2.0-flash",
 temperature=0.7,
 google_api_key="" 
 )
 
+# Setting up Streamlit session state for memory and conversation
 if "memory" not in st.session_state:
     st.session_state.memory = ConversationBufferMemory(memory_key="history")
 
@@ -32,6 +37,7 @@ Human: {input}
 AI:"""
 )
 
+# Initializing the conversation chain with the LLM and prompt template
 st.session_state.conversation = LLMChain(
 llm=llm,
 prompt=prompt_template,
@@ -39,6 +45,7 @@ memory=st.session_state.memory,
 verbose=True
 )
 
+# Initializing the Speak function to read the output
 def speak(text):
     try:
         local_engine = pyttsx3.init()
@@ -55,6 +62,7 @@ def speak(text):
     except RuntimeError:
         pass
 
+# Function to stop speaking
 def stop_speaking():
     
     stop_flag = True
@@ -64,10 +72,8 @@ def stop_speaking():
     except RuntimeError:
         pass
 
+# Main function to handle speech recognition and response generation
 def main():
-
-
-
     try:
         with sr.Microphone() as source:
             status.info("Adjusting for noise...")
